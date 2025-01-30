@@ -70,14 +70,14 @@ class Api {
 }
 
 class BankNote {
-  protected static nextId: number = 0;
-  protected static readonly validAmount = [5, 10, 20, 50, 100, 200, 500];
+  private static nextId = 0;
+  private static readonly validAmount = [5, 10, 20, 50, 100, 200, 500];
 
   #id: number;
   #amount: (typeof BankNote.validAmount)[keyof typeof BankNote.validAmount];
 
   constructor(amount: number) {
-    this.#id = BankNote.nextId++;
+    this.#id = ++BankNote.nextId;
     if (!BankNote.checkValue(amount)) {
       throw new Error("Montant du billet invalide");
     }
