@@ -113,3 +113,71 @@ class BankNote {
     return bankNotes;
   }
 }
+
+abstract class Character {
+  protected static nextId = 0;
+
+  #id: number;
+  #name: string;
+
+  constructor(name: string) {
+    this.#id = ++Character.nextId;
+    this.#name = name;
+  }
+
+  get id() {
+    return this.#id;
+  }
+
+  get name() {
+    return this.#name;
+  }
+
+  set name(value: string) {
+    this.#name = value;
+  }
+
+  attack() {}
+}
+
+class Fighter extends Character {
+  #strength: number;
+
+  constructor(name: string, strength: number) {
+    super(name);
+    this.#strength = strength;
+  }
+
+  get strength() {
+    return this.#strength;
+  }
+
+  set strength(value: number) {
+    this.#strength = value;
+  }
+
+  attack() {
+    return `Dég^ts infligés par le combattant : ${5 * this.strength}`;
+  }
+}
+
+class Magician extends Character {
+  #mana: number;
+
+  constructor(name: string, mana: number) {
+    super(name);
+    this.#mana = mana;
+  }
+
+  get mana() {
+    return this.#mana;
+  }
+
+  set mana(value: number) {
+    this.#mana = value;
+  }
+
+  attack() {
+    return `Dégâts infligés par le mage : ${12 * (2 + this.mana)}`;
+  }
+}
