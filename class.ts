@@ -15,6 +15,7 @@ class Api {
     if (typeof error === "string") {
       return error;
     }
+
     return "Something went wrong.";
   }
 
@@ -39,16 +40,24 @@ class Api {
 
       if (!response.ok) {
         return {
-          error: `Erreur : ${response.statusText}`,
-          code: response.status,
+          error: {
+            message: `Erreur : ${response.statusText}`,
+            code: response.status,
+          },
           data: null,
         };
       }
 
       const data: T = await response.json();
-      return { error: null, data };
+      return { error: null, code: response.status, data };
     } catch (error: unknown) {
-      return { error: this.extractErrorMessage(error), data: null };
+      return {
+        error: {
+          message: this.extractErrorMessage(error),
+          code: 0,
+        },
+        data: null,
+      };
     }
   }
 
@@ -74,7 +83,7 @@ class BankNote {
   private static readonly validAmount = [5, 10, 20, 50, 100, 200, 500];
 
   #id: number;
-  #amount: (typeof BankNote.validAmount)[keyof typeof BankNote.validAmount];
+  #amount: number;
 
   constructor(amount: number) {
     this.#id = ++BankNote.nextId;
@@ -84,7 +93,7 @@ class BankNote {
     this.#amount = amount;
   }
 
-  protected static checkValue(amount: number) {
+  private static checkValue(amount: number) {
     return BankNote.validAmount.includes(amount);
   }
 
@@ -110,6 +119,7 @@ class BankNote {
     for (let index = 0; index < quantity; index++) {
       bankNotes = [...bankNotes, new BankNote(amount)];
     }
+
     return bankNotes;
   }
 }
@@ -157,7 +167,7 @@ class Fighter extends Character {
   }
 
   attack() {
-    return `Dég^ts infligés par le combattant : ${5 * this.strength}`;
+    return `Dégâts infligés par le combattant : ${5 * this.strength}`;
   }
 }
 
