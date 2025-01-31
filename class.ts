@@ -137,7 +137,7 @@ abstract class Character {
     this.#name = value;
   }
 
-  attack() {}
+  abstract attack(): string;
 }
 
 class Fighter extends Character {
