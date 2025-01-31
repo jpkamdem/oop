@@ -2,7 +2,21 @@ export function consoleLog(value: any) {
   console.dir(value, { depth: Infinity, numericSeparator: true });
 }
 
-class Api {
+type SuccessResponse<T> = {
+  error: null;
+  code: number;
+  data: T;
+};
+
+type FailedResponse = {
+  error: {
+    message: string;
+    code: number;
+  };
+  data: null;
+};
+
+export class Api {
   constructor() {}
 
   private extractErrorMessage(error: unknown) {
@@ -23,7 +37,7 @@ class Api {
     url: string,
     method: "GET" | "POST" | "PATCH" | "DELETE",
     body?: T
-  ) {
+  ): Promise<SuccessResponse<T> | FailedResponse> {
     try {
       const options: RequestInit = {
         signal: AbortSignal.timeout(15000),
