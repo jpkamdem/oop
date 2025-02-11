@@ -1,7 +1,7 @@
-import { FailedResponse } from "./types/failed-response.ts";
-import { SuccessResponse } from "./types/success-response.ts";
+import type { FailedResponse } from "./types/failed-response.ts";
+import type { SuccessResponse } from "./types/success-response.ts";
 
-export class Api {
+class Api {
   private extractErrorMessage(error: unknown) {
     if (error instanceof Error) {
       return error.message;
@@ -74,3 +74,5 @@ export class Api {
     return this.call<T>(url, "DELETE");
   }
 }
+
+export const api = new Api()
