@@ -96,15 +96,16 @@ class BankNote {
   private static nextId = 0;
   private static readonly validAmount = [5, 10, 20, 50, 100, 200, 500];
 
-  #id: number;
-  #amount: number;
+  _id: number;
+  _amount: number;
 
   constructor(amount: number) {
-    this.#id = ++BankNote.nextId;
     if (!BankNote.checkValue(amount)) {
       throw new Error("Montant du billet invalide");
     }
-    this.#amount = amount;
+
+    this._id = ++BankNote.nextId;
+    this._amount = amount;
   }
 
   private static checkValue(amount: number) {
@@ -112,11 +113,11 @@ class BankNote {
   }
 
   get id() {
-    return this.#id;
+    return this._id;
   }
 
   get amount() {
-    return this.#amount;
+    return this._amount;
   }
 
   static generate(amount: number, quantity?: number) {
@@ -141,43 +142,43 @@ class BankNote {
 abstract class Character {
   protected static nextId = 0;
 
-  #id: number;
-  #name: string;
+  _id: number;
+  _name: string;
 
   constructor(name: string) {
-    this.#id = ++Character.nextId;
-    this.#name = name;
+    this._id = ++Character.nextId;
+    this._name = name;
   }
 
   get id() {
-    return this.#id;
+    return this._id;
   }
 
   get name() {
-    return this.#name;
+    return this._name;
   }
 
   set name(value: string) {
-    this.#name = value;
+    this._name = value;
   }
 
   abstract attack(): string;
 }
 
 class Fighter extends Character {
-  #strength: number;
+  _strength: number;
 
   constructor(name: string, strength: number) {
     super(name);
-    this.#strength = strength;
+    this._strength = strength;
   }
 
   get strength() {
-    return this.#strength;
+    return this._strength;
   }
 
   set strength(value: number) {
-    this.#strength = value;
+    this._strength = value;
   }
 
   attack() {
@@ -186,19 +187,19 @@ class Fighter extends Character {
 }
 
 class Magician extends Character {
-  #mana: number;
+  _mana: number;
 
   constructor(name: string, mana: number) {
     super(name);
-    this.#mana = mana;
+    this._mana = mana;
   }
 
   get mana() {
-    return this.#mana;
+    return this._mana;
   }
 
   set mana(value: number) {
-    this.#mana = value;
+    this._mana = value;
   }
 
   attack() {
