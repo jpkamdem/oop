@@ -1,29 +1,29 @@
 class BankNote {
-  private static nextId = 0;
-  private static readonly validAmount = [5, 10, 20, 50, 100, 200, 500];
+  static #nextId = 0;
+  static readonly #validAmount = [5, 10, 20, 50, 100, 200, 500];
 
-  private readonly _id: number;
-  private _amount: number;
+  readonly #id: number;
+  #amount: number;
 
   constructor(amount: number) {
     if (!BankNote.checkValue(amount)) {
       throw new Error("Montant du billet invalide");
     }
 
-    this._id = ++BankNote.nextId;
-    this._amount = amount;
+    this.#id = ++BankNote.#nextId;
+    this.#amount = amount;
   }
 
   private static checkValue(amount: number) {
-    return BankNote.validAmount.includes(amount);
+    return BankNote.#validAmount.includes(amount);
   }
 
   get id() {
-    return this._id;
+    return this.#id;
   }
 
   get amount() {
-    return this._amount;
+    return this.#amount;
   }
 
   static generate(amount: number, quantity?: number) {

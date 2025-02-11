@@ -1,8 +1,8 @@
 abstract class Character {
   protected static nextId = 0;
 
-  private readonly _id: number;
-  private _name: string;
+  protected readonly _id: number;
+  protected _name: string;
 
   constructor(name: string) {
     this._id = ++Character.nextId;
@@ -25,19 +25,19 @@ abstract class Character {
 }
 
 class Fighter extends Character {
-  private _strength: number;
+  #strength: number;
 
   constructor(name: string, strength: number) {
     super(name);
-    this._strength = strength;
+    this.#strength = strength;
   }
 
   get strength() {
-    return this._strength;
+    return this.#strength;
   }
 
   set strength(value: number) {
-    this._strength = value;
+    this.#strength = value;
   }
 
   attack() {
@@ -46,19 +46,19 @@ class Fighter extends Character {
 }
 
 class Magician extends Character {
-  private _mana: number;
+  #mana: number;
 
   constructor(name: string, mana: number) {
     super(name);
-    this._mana = mana;
+    this.#mana = mana;
   }
 
   get mana() {
-    return this._mana;
+    return this.#mana;
   }
 
   set mana(value: number) {
-    this._mana = value;
+    this.#mana = value;
   }
 
   attack() {

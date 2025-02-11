@@ -2,7 +2,7 @@ import type { FailedResponse } from "./types/failed-response.ts";
 import type { SuccessResponse } from "./types/success-response.ts";
 
 class Api {
-  private extractErrorMessage(error: unknown) {
+  #extractErrorMessage(error: unknown) {
     if (error instanceof Error) {
       return error.message;
     }
@@ -16,7 +16,7 @@ class Api {
     return "Something went wrong.";
   }
 
-  private async call<T>(
+  async #call<T>(
     url: string,
     method: "GET" | "POST" | "PATCH" | "DELETE",
     body?: T
@@ -29,7 +29,7 @@ class Api {
         headers: { "Content-Type": "application/json" },
       };
 
-      if ((body && method !== "GET") || method !== "DELETE") {
+      if (body && method !== "GET" && method !== "DELETE") {
         options.body = JSON.stringify(body);
       }
 
@@ -50,7 +50,7 @@ class Api {
     } catch (error: unknown) {
       return {
         error: {
-          message: this.extractErrorMessage(error),
+          message: this.#extractErrorMessage(error),
           code: 0,
         },
         data: null,
@@ -59,20 +59,20 @@ class Api {
   }
 
   async get<T>(url: string) {
-    return this.call<T>(url, "GET");
+    return this.#call<T>(url, "GET");
   }
 
   async post<T>(url: string, body: T) {
-    return this.call<T>(url, "POST", body);
+    return this.#call<T>(url, "POST", body);
   }
 
   async patch<T>(url: string, body: T) {
-    return this.call<T>(url, "PATCH", body);
+    return this.#call<T>(url, "PATCH", body);
   }
 
   async delete<T>(url: string) {
-    return this.call<T>(url, "DELETE");
+    return this.#call<T>(url, "DELETE");
   }
 }
 
-export const api = new Api()
+export const api = new Api();
