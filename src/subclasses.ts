@@ -1,3 +1,5 @@
+import { consoleLog } from "./utils.ts";
+
 abstract class Character {
   protected static nextId = 0;
 
@@ -24,7 +26,7 @@ abstract class Character {
   abstract attack(): string;
 }
 
-class Fighter extends Character {
+export class Fighter extends Character {
   #strength: number;
 
   constructor(name: string, strength: number) {
@@ -45,7 +47,7 @@ class Fighter extends Character {
   }
 }
 
-class Magician extends Character {
+export class Magician extends Character {
   #mana: number;
 
   constructor(name: string, mana: number) {
